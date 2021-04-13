@@ -55,10 +55,10 @@ class Table {
       resultHtml = resultHtml + makeRow(el);
     });
 
-    return `<div class="col-2">${delbutton()}</div>
-    <div class="col-sm-5">${delbutton()} <input type="text" class="form-control" placeholder="City" aria-label="City">
-
-  </div> <table>${resultHtml}</table>`;
+    return `<div class="d-flex justify-content-evenly p-4">
+    <input type="text" class="form-control" placeholder="City" aria-label="City" style="width: 50%;">${delbutton()} ${delbutton()}
+    </div>
+ <table>${resultHtml}</table>`;
   }
 }
 

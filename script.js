@@ -27,7 +27,7 @@ const elements = [{
 ];
 
 const button = (id) => `<button data-action="edit" data-id = ${id} class="btn btn-primary" style="width: 100px;"> Edit </button>`;
-const delbutton = () => `<button data-action="delete" class="btn btn-danger" style="width: 100px;">Delete</button>`;
+const delbutton = (id) => `<button data-action="delete" data-id = ${id} class="btn btn-danger" style="width: 100px;">Delete</button>`;
 const searchbutton = () => `<button data-action="search" class="btn btn-info" style="width: 100px;"> Search </button>`;
 const addbutton = () => `<button data-action="add" class="btn btn-primary" style="width: 100px;"> Add New </button>`;
 
@@ -43,11 +43,11 @@ const makeRow = ({
   price
 }) => `
 <tr>
-    <td class="d-flex justify-content-between">${title}
+    <td class="d-flex justify-content-between" style="heigt: 100%;">${title}
     <span class="badge rounded-pill bg-secondary">${count}</span>
     </td>
     <td class="align-middle">${price}</td>
-    <td class="d-flex justify-content-evenly">${button(id)} ${delbutton()} </td>
+    <td class="d-flex justify-content-evenly">${button(id)} ${delbutton(id)} </td>
   </tr>
 `;
 
@@ -77,14 +77,14 @@ class Table {
       <div class = "row">
         <div class = "col-2"> </div>
           <div class = "col-8">
-    ${searchline()}
+              ${searchline()}
               <table class="table table-bordered table-secondary"">
-              <tr class="table-primary">
-    <th>Name</th>
-    <th>Price</th>
-    <th>Action</th>
-  </tr>             
-   ${resultHtml}
+                <tr class="table-primary">
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>             
+                ${resultHtml}
               </table>
           </div>
         </div>
@@ -98,6 +98,8 @@ function tableHandler(event) {
 
   if (dataAttribute.action === "edit" && !!dataAttribute.id) {
     console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
+  } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
+    console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
   }
 
   console.log(dataAttribute);

@@ -71,7 +71,7 @@ class Table {
     });
 
     return `
-    <div class = "container">
+    <div class = "container" id = "button">
       <div class = "row">
         <div class = "col-2"> </div>
           <div class = "col-8">
@@ -104,12 +104,12 @@ class Button {
     console.log("Edit");
   }
 
-  delete() {
+  delbutton() {
     console.log("Delete");
   }
 
   search() {
-    console.log("Search");
+    console.log('Search');
   }
 
   add() {
@@ -123,6 +123,8 @@ class Button {
     }
   };
 }
+
+new Button(button);
 
 
 const table = new Table(elements, "table");

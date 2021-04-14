@@ -26,7 +26,7 @@ const elements = [{
   },
 ];
 
-const button = (id) => `<button data-action="edit" id = ${id} class="btn btn-primary" style="width: 100px;"> Edit </button>`;
+const button = (id) => `<button data-action="edit" data-id = ${id} class="btn btn-primary" style="width: 100px;"> Edit </button>`;
 const delbutton = () => `<button data-action="delete" class="btn btn-danger" style="width: 100px;">Delete</button>`;
 const searchbutton = () => `<button data-action="search" class="btn btn-info" style="width: 100px;"> Search </button>`;
 const addbutton = () => `<button data-action="add" class="btn btn-primary" style="width: 100px;"> Add New </button>`;
@@ -61,6 +61,8 @@ class Table {
     let x = document.getElementById(this.idElemToRenderWithin);
 
     x.insertAdjacentHTML("afterbegin", this.render(this.elements));
+
+    x.addEventListener("click", tableHandler);
   }
 
   render(elements) {
@@ -89,42 +91,18 @@ class Table {
     </div>;
  `;
   }
-
-  
 }
 
+function tableHandler(event) {
+  const dataAttribute = event.target.dataset;
 
-class Button {
-  constructor(elem) {
-    this._elem = elem;
-    elem.onclick = this.onClick.bind(this);
+  if (dataAttribute.action === "edit" && !!dataAttribute.id) {
+    console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
   }
 
-  edit() {
-    console.log("Edit");
-  }
-
-  delbutton() {
-    console.log("Delete");
-  }
-
-  search() {
-    console.log('Search');
-  }
-
-  add() {
-    console.log("Add New");
-  }
-
-  onClick(event) {
-    let action = event.target.dataset.action;
-    if (action) {
-      this[action]();
-    }
-  };
+  console.log(dataAttribute);
 }
 
-new Button(button);
 
 
 const table = new Table(elements, "table");

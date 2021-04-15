@@ -51,11 +51,11 @@ const makeRow = ({
   price
 }) => `
 <tr>
-    <td class="d-flex justify-content-between" style="heigt: 100%;">${title}
+    <td><div class="d-flex justify-content-between" style="heigt: 100%;">${title}
     <span class="badge rounded-pill bg-secondary">${count}</span>
-    </td>
+    </div></td>
     <td class="align-middle">${price}</td>
-    <td class="d-flex justify-content-evenly">${button(id)} ${delbutton(id)} </td>
+    <td><div class="d-flex justify-content-evenly">${button(id)} ${delbutton(id)} </div></td>
   </tr>
 `;
 

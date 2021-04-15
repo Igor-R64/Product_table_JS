@@ -30,37 +30,10 @@ const button = (id) => `<button data-action="edit" data-id = ${id} class="btn bt
 const delbutton = (id) => `<button data-action="delete" data-id = ${id} class="btn btn-danger" style="width: 100px;">Delete</button>`;
 const searchbutton = () => `<button data-action="search" class="btn btn-info" style="width: 100px;"> Search </button>`;
 const addbutton = () => `<button data-action="add" class="btn btn-primary" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add New </button>`;
-const addmodal = () => `<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" id="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Element</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-6">
-                <input class="form-control" type="text" placeholder="Name"
-                    aria-label="default input example">
-            </div>
-            <label for="inputName" class="col-sm-2 col-form-label">Count</label>
-            <div class="col-sm-4">
-                <input class="form-control" type="text" placeholder="Count"
-                    aria-label="default input example">
-            </div>
-            <label for="inputName" class="col-sm-2 col-form-label">Price</label>
-            <div class="col-sm-6">
-                <input class="form-control" type="text" placeholder="Price"
-                    aria-label="default input example">
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-    </div>
-</div>
-</div>`;
+const addmodal = document.createElement('div');
+addmodal.innerHTML = '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> <div class="modal-dialog" id="modal"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Add New Element</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><label for="inputName" class="col-sm-2 col-form-label">Name</label><div class="col-sm-6"><input class="form-control" type="text" placeholder="Name"aria-label="default input example"></div><label for="inputName" class="col-sm-2 col-form-label">Count</label><div class="col-sm-4"><input class="form-control" type="text" placeholder="Count"aria-label="default input example"></div><label for="inputName" class="col-sm-2 col-form-label">Price</label><div class="col-sm-6"><input class="form-control" type="text" placeholder="Price"aria-label="default input example"></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Save changes</button></div></div></div></div>';
+document.body.prepend(addmodal);
+
 
 
 
@@ -68,6 +41,8 @@ const searchline = () => `<div class="d-flex justify-content-evenly p-4">
 <input type="text" class="form-control" placeholder="Search..." aria-label="City" style="width: 70%;">
 ${searchbutton()} ${addbutton()}
 </div>`;
+
+
 
 const makeRow = ({
   id,
@@ -97,7 +72,6 @@ class Table {
 
     x.addEventListener("click", tableHandler);
 
-    x.addEventListener("click", modalHandler);
   }
 
   render(elements) {
@@ -142,12 +116,6 @@ function tableHandler(event) {
   console.log(dataAttribute);
 }
 
-function modalHandler(event) {
-  const modalAdd = event.target.dataset;
-  if(modalAdd == 'add'){
-    document.body.firstChild(addmodal());
-  };
-}
 
 const table = new Table(elements, "table");
 

@@ -1,4 +1,3 @@
-const tableLauout = ``;
 
 const elements = [{
     id: 1,
@@ -29,10 +28,10 @@ const elements = [{
 const button = (id) => `<button data-action="edit" data-id = ${id} class="btn btn-primary" style="width: 100px;"> Edit </button>`;
 const delbutton = (id) => `<button data-action="delete" data-id = ${id} class="btn btn-danger" style="width: 100px;">Delete</button>`;
 const searchbutton = () => `<button data-action="search" class="btn btn-info" style="width: 100px;"> Search </button>`;
-const addbutton = () => `<button data-action="add" class="btn btn-primary" style="width: 100px;" data-bs-toggle="modal" data-bs-target="#exampleModal"> Add New </button>`;
-const addmodal = document.createElement('div');
-addmodal.innerHTML = '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> <div class="modal-dialog" id="modal"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Add New Element</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><label for="inputName" class="col-sm-2 col-form-label">Name</label><div class="col-sm-6"><input class="form-control" type="text" placeholder="Name"aria-label="default input example"></div><label for="inputName" class="col-sm-2 col-form-label">Count</label><div class="col-sm-4"><input class="form-control" type="text" placeholder="Count"aria-label="default input example"></div><label for="inputName" class="col-sm-2 col-form-label">Price</label><div class="col-sm-6"><input class="form-control" type="text" placeholder="Price"aria-label="default input example"></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Save changes</button></div></div></div></div>';
-document.body.prepend(addmodal);
+const addbutton = () => `<button data-action="add" class="btn btn-primary" style="width: 100px;"> Add New </button>`;
+// const addmodal = document.createElement('div');
+// addmodal.innerHTML = '<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> <div class="modal-dialog" id="modal"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="exampleModalLabel">Add New Element</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><label for="inputName" class="col-sm-2 col-form-label">Name</label><div class="col-sm-6"><input class="form-control" type="text" placeholder="Name"aria-label="default input example"></div><label for="inputName" class="col-sm-2 col-form-label">Count</label><div class="col-sm-4"><input class="form-control" type="text" placeholder="Count"aria-label="default input example"></div><label for="inputName" class="col-sm-2 col-form-label">Price</label><div class="col-sm-6"><input class="form-control" type="text" placeholder="Price"aria-label="default input example"></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button type="button" class="btn btn-primary">Save changes</button></div></div></div></div>';
+// document.body.prepend(addmodal);
 
 
 
@@ -70,9 +69,33 @@ class Table {
 
     x.insertAdjacentHTML("afterbegin", this.render(this.elements));
 
-    x.addEventListener("click", tableHandler);
+    x.addEventListener("click", this.tableHandler.bind(this));
 
   }
+
+  tableHandler = function(event) {
+    const dataAttribute = event.target.dataset;
+  
+    if (dataAttribute.action === "edit" && !!dataAttribute.id) {
+      console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
+    } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
+      console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
+    } else if (dataAttribute.action === "add") {
+    this.elements = [
+      ...this.elements,
+      {
+        id: 5,
+        count: 12,
+        title: "Х-З",
+        price: 10,
+      },
+    ];
+console.log(this.elements);
+    }
+  
+    console.log(dataAttribute);
+  }
+
 
   render(elements) {
     let resultHtml = "";
@@ -104,17 +127,7 @@ class Table {
 
 
 
-function tableHandler(event) {
-  const dataAttribute = event.target.dataset;
 
-  if (dataAttribute.action === "edit" && !!dataAttribute.id) {
-    console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
-  } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
-    console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
-  }
-
-  console.log(dataAttribute);
-}
 
 
 const table = new Table(elements, "table");

@@ -81,16 +81,20 @@ class Table {
     } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
       console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
     } else if (dataAttribute.action === "add") {
+      let a = +prompt('Количество','');
+      let b = prompt('Название','');
+      let c = +prompt('Цена','');
+      console.log(this.elements.id);
     this.elements = [
       ...this.elements,
       {
         id: 5,
-        count: 12,
-        title: "Х-З",
-        price: 10,
+        count: a,
+        title: b,
+        price: c,
       },
     ];
-console.log(this.elements);
+      console.log(this.elements);
     }
   
     console.log(dataAttribute);
@@ -124,10 +128,6 @@ console.log(this.elements);
  `;
   }
 }
-
-
-
-
 
 
 const table = new Table(elements, "table");

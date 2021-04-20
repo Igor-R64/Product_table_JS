@@ -37,7 +37,9 @@ const searchline = () => `<div class="d-flex justify-content-evenly p-4">
 ${searchbutton()} ${addbutton()}
 </div>`;
 
-
+const elem = document.getElementById("1");
+    
+elem.style.backgroundColor = 'blue';
 
 
 
@@ -79,11 +81,6 @@ class Table {
 
   }
 
-  elsort() {
-    const elem = document.getElementById("1");
-    
-    elem.classList.add('.bg-down');
-  }
 
 
   cleaning() {
@@ -134,7 +131,7 @@ class Table {
     } else if (dataAttribute.action === "sort"){
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
-      this.elsort();
+      
       this.cleaning();
       this.render();
       console.log(this.elements);

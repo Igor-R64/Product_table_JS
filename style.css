@@ -13,3 +13,13 @@
  } */
 
  
+ .bg-down {
+   width: 32px; height: 32px;
+   background: url('img/sorting_sprites.png') -10px -10px;
+}
+
+x
+.bg-up {
+   width: 32px; height: 32px;
+   background: url('img/sorting_sprites.png') -62px -10px;
+}

@@ -37,6 +37,12 @@ const searchline = () => `<div class="d-flex justify-content-evenly p-4">
 ${searchbutton()} ${addbutton()}
 </div>`;
 
+const elem = () => document.getElementById("asc");
+    
+console.log(elem.classList);
+
+
+
 
 
 const makeRow = ({
@@ -58,23 +64,34 @@ class Table {
   constructor(elements, idElemToRenderWithin) {
     this.elements = elements;
     this.idElemToRenderWithin = idElemToRenderWithin;
+    this.sortingOrder = {
+      orderByName: 'asc',
+      orderByPrice: 'desc',
+    }
   }
 
-  initialize() {
+  render() {
     let x = document.getElementById(this.idElemToRenderWithin);
 
-    x.insertAdjacentHTML("afterbegin", this.render(this.elements));
+    const sorteredElements = this.elements.sort(el => el.title)
+
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(this.elements));
 
     x.addEventListener("click", this.tableHandler.bind(this));
 
   }
 
   
+
+
   cleaning() {
     let div = document.getElementById("table");
     let conteiner = document.querySelector(".container");
     div.removeChild(conteiner);
   }
+
+  
+  
 
   tableHandler = function(event) {
     const dataAttribute = event.target.dataset;
@@ -87,14 +104,15 @@ class Table {
 
       this.cleaning();
 
-      this.initialize();
+      this.render();
 
     } else if (dataAttribute.action === "add") {
-      
+
       const a = +prompt('Количество','');
       const b = prompt('Название','');
       const c = +prompt('Цена','');
       const length = this.elements.length;
+
     this.elements = [
       ...this.elements,
       {
@@ -104,22 +122,34 @@ class Table {
         price: c,
       },
     ];
+
       console.log(this.elements);
 
       this.cleaning();
 
-      this.initialize();
+      this.render();
+      
+    } else if (dataAttribute.action === "sort"){
+      
+      this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
+      
+      this.cleaning();
+      this.render();
+      console.log(this.elements);
     }
   
     console.log(dataAttribute);
+
   }
 
-  render(elements) {
+  makeHtmlForTable(elements) {
     let resultHtml = "";
+  
 
     elements.forEach((el) => {
       resultHtml = resultHtml + makeRow(el);
     });
+
 
     return `
     <div class = "container" id = "button">
@@ -127,10 +157,10 @@ class Table {
         <div class = "col-2"> </div>
           <div class = "col-8">
               ${searchline()}
-              <table class="table table-bordered table-secondary"">
+              <table class="table table-bordered table-secondary align-middle">
                 <tr class="table-primary">
-                  <th>Name</th>
-                  <th>Price</th>
+                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="asc" data-action="sort">1</div></div></th>
+                  <th><div class="d-flex justify-content-around"><div>Price</div></div></th>
                   <th>Action</th>
                 </tr>             
                 ${resultHtml}
@@ -139,11 +169,15 @@ class Table {
         </div>
     </div>
  `;
+  
   }
+ 
+  
  
 }
 
 
+
 const table = new Table(elements, "table");
 
-table.initialize();
+table.render();

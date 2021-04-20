@@ -37,9 +37,7 @@ const searchline = () => `<div class="d-flex justify-content-evenly p-4">
 ${searchbutton()} ${addbutton()}
 </div>`;
 
-const elem = () => document.getElementById("asc");
-    
-console.log(elem.classList);
+
 
 
 
@@ -81,7 +79,11 @@ class Table {
 
   }
 
-  
+  elsort() {
+    const elem = document.getElementById("1");
+    
+    elem.classList.add('.bg-down');
+  }
 
 
   cleaning() {
@@ -132,7 +134,7 @@ class Table {
     } else if (dataAttribute.action === "sort"){
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
-      
+      this.elsort();
       this.cleaning();
       this.render();
       console.log(this.elements);
@@ -159,7 +161,7 @@ class Table {
               ${searchline()}
               <table class="table table-bordered table-secondary align-middle">
                 <tr class="table-primary">
-                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="asc" data-action="sort">1</div></div></th>
+                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="1" data-action="sort">1</div></div></th>
                   <th><div class="d-flex justify-content-around"><div>Price</div></div></th>
                   <th>Action</th>
                 </tr>             

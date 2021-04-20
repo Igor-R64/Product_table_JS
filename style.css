@@ -1,24 +1,11 @@
-/* table {
-    border-collapse: collapse;
-}
-
- th {
-    border: 1px solid grey;
- }
-
- td {
-    border: 1px solid grey;
-    width: 200px;
-
- } */
 
  
- .bg-down {
+.bg-down {
    width: 32px; height: 32px;
    background: url('img/sorting_sprites.png') -10px -10px;
 }
 
-x
+
 .bg-up {
    width: 32px; height: 32px;
    background: url('img/sorting_sprites.png') -62px -10px;

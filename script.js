@@ -28,8 +28,8 @@ class Table {
 
   cleaning() {
     let div = document.getElementById("table");
-    let conteiner = document.querySelector(".container");
-    div.removeChild(conteiner);
+    let container = document.querySelector(".container");
+    div.removeChild(container);
   }
 
   
@@ -78,7 +78,7 @@ class Table {
       this.cleaning();
 
       this.render();
-      
+
       console.log(this.elements);
     }
   

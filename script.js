@@ -16,7 +16,9 @@ class Table {
   render() {
     let x = document.getElementById(this.idElemToRenderWithin);
 
-    const sorteredElements = this.elements.sort(el => el.title)
+    const sorteredElementsTitle = this.elements.map (item => item.title).sort();
+
+    const sorteredElementsCount = this.elements.map (item => item.count).sort((a, b) => a - b);
 
     x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(this.elements));
 
@@ -32,7 +34,40 @@ class Table {
     div.removeChild(container);
   }
 
+  arrowUp() {
+    const elem = document.getElementById("1");
+    elem.style.cssText=`
+      width: 32px; height: 32px;
+      background: url('img/sorting_sprites.png') -62px -10px;
+  `;
+  }
+
+  arrowDown() {
+    const elem1 = document.getElementById("1");
+    elem1.style.cssText=`
+      width: 32px; height: 32px;
+      background: url('img/sorting_sprites.png') -10px -10px;
+  `;
+  }
+
+  up() {
+    let div = document.getElementById('1');
+    div.insertAdjacentHTML('afterbegin', "&#11165;");
+  }
+
+  test() {
+    
+      let id = dataAttribute.toggleId;
+
+      if (!id) return;
   
+      let elem = document.getElementById(id);
+  
+      elem.hidden = !elem.hidden;
+    
+  }
+
+
   
 
   tableHandler = function(event) {
@@ -71,13 +106,33 @@ class Table {
 
       this.render();
       
-    } else if (dataAttribute.action === "sort"){
+    } else if (dataAttribute.action === "sortName"){
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
       
+
       this.cleaning();
 
+      
       this.render();
+      
+      this.arrowUp();
+
+
+      console.log(this.elements);
+
+    } else if (dataAttribute.action === "sortPrice"){
+      
+      this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
+      
+
+      this.cleaning();
+
+      
+      this.render();
+      
+      this.test();
+
 
       console.log(this.elements);
     }
@@ -87,9 +142,9 @@ class Table {
   }
 
   makeHtmlForTable(elements) {
-    let resultHtml = "";
-  
 
+    let resultHtml = "";
+   
     elements.forEach((el) => {
       resultHtml = resultHtml + makeRow(el);
     });
@@ -103,8 +158,8 @@ class Table {
               ${searchline()}
               <table class="table table-bordered table-secondary align-middle">
                 <tr class="table-primary">
-                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="1" data-action="sort">1</div></div></th>
-                  <th><div class="d-flex justify-content-around"><div>Price</div></div></th>
+                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="1" data-action="sortName" data-toggle-id = 'q'> 1 </div></div></th>
+                  <th><div class="d-flex justify-content-around"><div>Price</div><div id="1" data-action="sortPrice">&#11167;</div></div></th>
                   <th>Action</th>
                 </tr>             
                 ${resultHtml}
@@ -113,11 +168,7 @@ class Table {
         </div>
     </div>
  `;
-  
-  }
- 
-  
- 
+  } 
 }
 
 
@@ -125,3 +176,4 @@ class Table {
 const table = new Table(elements, "table");
 
 table.render();
+

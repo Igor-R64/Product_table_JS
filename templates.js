@@ -23,3 +23,6 @@ const makeRow = ({
       <td><div class="d-flex justify-content-evenly">${button(id)} ${delbutton(id)} </div></td>
     </tr>
   `;
+
+  const ups = () => `&#11165;`;
+

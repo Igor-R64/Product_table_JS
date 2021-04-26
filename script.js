@@ -1,8 +1,4 @@
 
-// const elem = document.getElementById("1");
-    
-// elem.style.backgroundColor = 'blue';
-
 class Table {
   constructor(elements, idElemToRenderWithin) {
     this.elements = elements;
@@ -13,17 +9,43 @@ class Table {
     }
   }
 
-  render() {
+  // initialize () {
+
+  //   let x = document.getElementById(this.idElemToRenderWithin);
+
+  //   const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
+
+  //   x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsPrice));
+
+  //   x.addEventListener("click", this.tableHandler.bind(this));
+  // }
+
+
+
+  renderTableHeader() {
     let x = document.getElementById(this.idElemToRenderWithin);
+    const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
 
-    const sorteredElementsTitle = this.elements.map (item => item.title).sort();
+    // const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
 
-    const sorteredElementsCount = this.elements.map (item => item.count).sort((a, b) => a - b);
-
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(this.elements));
-
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsTitle));
     x.addEventListener("click", this.tableHandler.bind(this));
+  }
 
+
+  renderTableBody ( ) {
+    this.cleaningTableBody();
+    let x = document.getElementById(this.idElemToRenderWithin);
+    const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(sorteredElementsPrice));
+  }
+
+  render() {
+    // let x = document.getElementById(this.idElemToRenderWithin);
+    // const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
+    // const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
+    // x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsPrice));
+    // x.addEventListener("click", this.tableHandler.bind(this));
   }
 
 
@@ -34,41 +56,33 @@ class Table {
     div.removeChild(container);
   }
 
-  arrowUp() {
-    const elem = document.getElementById("1");
-    elem.style.cssText=`
-      width: 32px; height: 32px;
-      background: url('img/sorting_sprites.png') -62px -10px;
-  `;
+  cleaningTableBody() {
+    // let div = document.getElementById("table");
+    let tabbody = document.querySelector(".table>tbody");
+    tabbody.remove();
   }
 
-  arrowDown() {
-    const elem1 = document.getElementById("1");
-    elem1.style.cssText=`
-      width: 32px; height: 32px;
-      background: url('img/sorting_sprites.png') -10px -10px;
-  `;
-  }
+  // arrowUp() {
+  //   const elem = document.getElementById("1");
+  //   elem.style.cssText=`
+  //     width: 32px; height: 32px;
+  //     background: url('img/sorting_sprites.png') -62px -10px;
+  // `;
+  // }
+
+  // arrowDown() {
+  //   const elem1 = document.getElementById("1");
+  //   elem1.style.cssText=`
+  //     width: 32px; height: 32px;
+  //     background: url('img/sorting_sprites.png') -10px -10px;
+  // `;
+  // }
 
   up() {
     let div = document.getElementById('1');
     div.insertAdjacentHTML('afterbegin', "&#11165;");
   }
 
-  test() {
-    
-      let id = dataAttribute.toggleId;
-
-      if (!id) return;
-  
-      let elem = document.getElementById(id);
-  
-      elem.hidden = !elem.hidden;
-    
-  }
-
-
-  
 
   tableHandler = function(event) {
     const dataAttribute = event.target.dataset;
@@ -79,9 +93,8 @@ class Table {
       console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
       this.elements = [ ... this.elements.filter(el => el.id !=dataAttribute.id)];
 
-      this.cleaning();
-
-      this.render();
+      this.renderTableBody();
+      
 
     } else if (dataAttribute.action === "add") {
 
@@ -117,9 +130,6 @@ class Table {
       this.render();
       
       this.arrowUp();
-
-
-      console.log(this.elements);
 
     } else if (dataAttribute.action === "sortPrice"){
       
@@ -157,23 +167,46 @@ class Table {
           <div class = "col-8">
               ${searchline()}
               <table class="table table-bordered table-secondary align-middle">
+              <thead>
                 <tr class="table-primary">
-                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="1" data-action="sortName" data-toggle-id = 'q'> 1 </div></div></th>
+                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="1" data-action="sortName" data-toggle-id = 'q'> &#11165; </div></div></th>
                   <th><div class="d-flex justify-content-around"><div>Price</div><div id="1" data-action="sortPrice">&#11167;</div></div></th>
                   <th>Action</th>
-                </tr>             
+                </tr>  
+                </thead>    
+                <tbody id='tbody'>
                 ${resultHtml}
+                </tbody>       
               </table>
           </div>
         </div>
     </div>
  `;
   } 
+
+  makeHtmlForTableBody(elements) {
+
+    let resultHtml = "";
+   
+    elements.forEach((el) => {
+      resultHtml = resultHtml + makeRow(el);
+    });
+
+
+    return `
+       
+                <tbody id='tbody'>
+                ${resultHtml}
+                </tbody>       
+         
+ `;
+  } 
+
 }
 
 
 
 const table = new Table(elements, "table");
 
-table.render();
+table.renderTableHeader();
 

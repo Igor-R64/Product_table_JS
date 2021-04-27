@@ -24,5 +24,7 @@ const makeRow = ({
     </tr>
   `;
 
+  
+
   const ups = () => `&#11165;`;
 

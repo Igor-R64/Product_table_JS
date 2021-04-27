@@ -9,17 +9,12 @@ class Table {
     }
   }
 
-  // initialize () {
-
-  //   let x = document.getElementById(this.idElemToRenderWithin);
-
-  //   const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
-
-  //   x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsPrice));
-
-  //   x.addEventListener("click", this.tableHandler.bind(this));
-  // }
-
+  initialize () {
+    let x = document.getElementById(this.idElemToRenderWithin);
+    const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsTitle));
+    x.addEventListener("click", this.tableHandler.bind(this));
+  }
 
 
   renderTableHeader() {
@@ -33,7 +28,7 @@ class Table {
   }
 
 
-  renderTableBody ( ) {
+  renderTableBody () {
     this.cleaningTableBody();
     let x = document.getElementById(this.idElemToRenderWithin);
     const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
@@ -94,6 +89,7 @@ class Table {
       this.elements = [ ... this.elements.filter(el => el.id !=dataAttribute.id)];
 
       this.renderTableBody();
+      makeHtmlForTableBody();
       
 
     } else if (dataAttribute.action === "add") {
@@ -113,7 +109,6 @@ class Table {
       },
     ];
 
-      console.log(this.elements);
 
       this.cleaning();
 
@@ -151,6 +146,7 @@ class Table {
 
   }
 
+  
   makeHtmlForTable(elements) {
 
     let resultHtml = "";
@@ -195,9 +191,7 @@ class Table {
 
     return `
        
-                <tbody id='tbody'>
-                ${resultHtml}
-                </tbody>       
+                ${resultHtml}      
          
  `;
   } 
@@ -208,5 +202,6 @@ class Table {
 
 const table = new Table(elements, "table");
 
-table.renderTableHeader();
+table.initialize();
+// table.renderTableBody();
 

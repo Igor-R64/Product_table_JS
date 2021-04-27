@@ -1,4 +1,3 @@
-
 class Table {
   constructor(elements, idElemToRenderWithin) {
     this.elements = elements;
@@ -11,39 +10,22 @@ class Table {
 
   initialize () {
     let x = document.getElementById(this.idElemToRenderWithin);
-    const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsTitle));
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable());
+    this.renderTableBody(this.elements);
     x.addEventListener("click", this.tableHandler.bind(this));
   }
-
 
   renderTableHeader() {
     let x = document.getElementById(this.idElemToRenderWithin);
-    const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
-
-    // const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
-
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsTitle));
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable());
     x.addEventListener("click", this.tableHandler.bind(this));
   }
 
-
   renderTableBody () {
-    this.cleaningTableBody();
-    let x = document.getElementById(this.idElemToRenderWithin);
-    const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(sorteredElementsPrice));
+    let x = document.getElementById('tbody');
+    const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(sorteredElementsTitle));
   }
-
-  render() {
-    // let x = document.getElementById(this.idElemToRenderWithin);
-    // const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
-    // const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
-    // x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable(sorteredElementsPrice));
-    // x.addEventListener("click", this.tableHandler.bind(this));
-  }
-
-
 
   cleaning() {
     let div = document.getElementById("table");
@@ -52,30 +34,10 @@ class Table {
   }
 
   cleaningTableBody() {
-    // let div = document.getElementById("table");
-    let tabbody = document.querySelector(".table>tbody");
-    tabbody.remove();
-  }
-
-  // arrowUp() {
-  //   const elem = document.getElementById("1");
-  //   elem.style.cssText=`
-  //     width: 32px; height: 32px;
-  //     background: url('img/sorting_sprites.png') -62px -10px;
-  // `;
-  // }
-
-  // arrowDown() {
-  //   const elem1 = document.getElementById("1");
-  //   elem1.style.cssText=`
-  //     width: 32px; height: 32px;
-  //     background: url('img/sorting_sprites.png') -10px -10px;
-  // `;
-  // }
-
-  up() {
-    let div = document.getElementById('1');
-    div.insertAdjacentHTML('afterbegin', "&#11165;");
+    let tbody = document.getElementById("tbody");
+    while (tbody.firstChild) {
+    tbody.removeChild(tbody.firstChild);
+}
   }
 
 
@@ -87,9 +49,11 @@ class Table {
     } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
       console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
       this.elements = [ ... this.elements.filter(el => el.id !=dataAttribute.id)];
+      
+      this.cleaningTableBody();
+      this.renderTableBody ();
 
-      this.renderTableBody();
-      makeHtmlForTableBody();
+      
       
 
     } else if (dataAttribute.action === "add") {
@@ -121,7 +85,6 @@ class Table {
 
       this.cleaning();
 
-      
       this.render();
       
       this.arrowUp();
@@ -132,8 +95,6 @@ class Table {
       
 
       this.cleaning();
-
-      
       this.render();
       
       this.test();
@@ -147,14 +108,7 @@ class Table {
   }
 
   
-  makeHtmlForTable(elements) {
-
-    let resultHtml = "";
-   
-    elements.forEach((el) => {
-      resultHtml = resultHtml + makeRow(el);
-    });
-
+  makeHtmlForTable() {
 
     return `
     <div class = "container" id = "button">
@@ -171,7 +125,6 @@ class Table {
                 </tr>  
                 </thead>    
                 <tbody id='tbody'>
-                ${resultHtml}
                 </tbody>       
               </table>
           </div>
@@ -181,21 +134,14 @@ class Table {
   } 
 
   makeHtmlForTableBody(elements) {
-
     let resultHtml = "";
    
     elements.forEach((el) => {
       resultHtml = resultHtml + makeRow(el);
     });
 
-
-    return `
-       
-                ${resultHtml}      
-         
- `;
+    return resultHtml;
   } 
-
 }
 
 
@@ -203,5 +149,4 @@ class Table {
 const table = new Table(elements, "table");
 
 table.initialize();
-// table.renderTableBody();
 

@@ -53,9 +53,6 @@ class Table {
       this.cleaningTableBody();
       this.renderTableBody ();
 
-      
-      
-
     } else if (dataAttribute.action === "add") {
 
       const a = +prompt('Количество','');
@@ -73,31 +70,24 @@ class Table {
       },
     ];
 
-
-      this.cleaning();
-
-      this.render();
+    this.cleaningTableBody();
+    this.renderTableBody ();
       
     } else if (dataAttribute.action === "sortName"){
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
       
 
-      this.cleaning();
-
-      this.render();
-      
-      this.arrowUp();
+      this.cleaningTableBody();
+      this.renderTableBody ();
 
     } else if (dataAttribute.action === "sortPrice"){
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
       
 
-      this.cleaning();
-      this.render();
-      
-      this.test();
+      this.cleaningTableBody();
+      this.renderTableBody ();
 
 
       console.log(this.elements);

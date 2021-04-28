@@ -21,10 +21,20 @@ class Table {
     x.addEventListener("click", this.tableHandler.bind(this));
   }
 
-  renderTableBody () {
+  renderTableBody (SortBody) {
     let x = document.getElementById('tbody');
-    const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(sorteredElementsTitle));
+
+    let SorteredElements;
+
+    if(SortBody === 'byName'){
+      SorteredElements = this.elements.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (SortBody === 'byPrice') {
+      SorteredElements = this.elements.sort((a, b) => a.price - b.price);
+    } else {
+      SorteredElements = this.elements;
+    }
+    
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SorteredElements));
   }
 
   cleaning() {
@@ -40,6 +50,19 @@ class Table {
 }
   }
 
+  arrowUp() {
+    let NameSort = document.getElementById("NameSort");
+    let p = document.createElement('a');
+    p.innerHTML = '&#11165;';
+    NameSort.prepend(p);
+  }
+
+  arrowDel() {
+    let NameSort = document.getElementById("NameSort");
+    NameSort.replaceChild();
+  }
+
+  // &#11167;
 
   tableHandler = function(event) {
     const dataAttribute = event.target.dataset;
@@ -77,9 +100,11 @@ class Table {
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
       
-
       this.cleaningTableBody();
-      this.renderTableBody ();
+      this.renderTableBody ("byName");
+      this.arrowUp();
+      this.arrowDel();
+
 
     } else if (dataAttribute.action === "sortPrice"){
       
@@ -87,8 +112,8 @@ class Table {
       
 
       this.cleaningTableBody();
-      this.renderTableBody ();
-
+      this.renderTableBody ("byPrice");
+      this.up();
 
       console.log(this.elements);
     }
@@ -97,7 +122,6 @@ class Table {
 
   }
 
-  
   makeHtmlForTable() {
 
     return `
@@ -109,8 +133,8 @@ class Table {
               <table class="table table-bordered table-secondary align-middle">
               <thead>
                 <tr class="table-primary">
-                  <th><div class="d-flex justify-content-around"><div>Name</div><div id="1" data-action="sortName" data-toggle-id = 'q'> &#11165; </div></div></th>
-                  <th><div class="d-flex justify-content-around"><div>Price</div><div id="1" data-action="sortPrice">&#11167;</div></div></th>
+                  <th><div class="d-flex justify-content-around" data-action="sortName" ><div>Name</div><div id="NameSort" data-action="sortName">  </div></div></th>
+                  <th><div class="d-flex justify-content-around"><div>Price</div><div id="PriceSort" data-action="sortPrice"></div></div></th>
                   <th>Action</th>
                 </tr>  
                 </thead>    
@@ -133,8 +157,6 @@ class Table {
     return resultHtml;
   } 
 }
-
-
 
 const table = new Table(elements, "table");
 

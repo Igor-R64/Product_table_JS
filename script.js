@@ -9,10 +9,8 @@ class Table {
   }
 
   initialize () {
-    let x = document.getElementById(this.idElemToRenderWithin);
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTable());
+    this.renderTableHeader(this.elements);
     this.renderTableBody(this.elements);
-    x.addEventListener("click", this.tableHandler.bind(this));
   }
 
   renderTableHeader() {
@@ -50,16 +48,28 @@ class Table {
 }
   }
 
-  arrowUp() {
-    let NameSort = document.getElementById("NameSort");
+  showArrow(direction, id) {
+    let NameSort = document.getElementById(id);
     let p = document.createElement('a');
-    p.innerHTML = '&#11165;';
+    p.innerHTML = direction === 'asc' ? '&#11165;': '&#11167;';
     NameSort.prepend(p);
   }
 
-  arrowDel() {
-    let NameSort = document.getElementById("NameSort");
-    NameSort.replaceChild();
+  deleteArrow(name) {
+    let Sort = document.getElementById(name);
+    Sort.replaceChild(a);
+  }
+
+
+  changeArrowSortingDirection (sortedBy,sortingOrder) {
+    if (sortedBy === 'NameSort') {
+      this.deleteArrow("PriceSort");
+      this.showArrow(this.sortingOrder.orderByName, "NameSort");
+
+    } else if (sortedBy === 'PriceSort') {
+      this.deleteArrow("NameSort");
+      this.showArrow(this.sortingOrder.orderByPrice, "PriceSort");
+    }
   }
 
   // &#11167;
@@ -99,12 +109,11 @@ class Table {
     } else if (dataAttribute.action === "sortName"){
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
-      
+  
       this.cleaningTableBody();
       this.renderTableBody ("byName");
-      this.arrowUp();
-      this.arrowDel();
-
+      this.showArrow(this.sortingOrder.orderByName, "NameSort");
+      // this.changeArrowSortingDirection(this.dataAttribute.action, this.sortingOrder);
 
     } else if (dataAttribute.action === "sortPrice"){
       
@@ -113,7 +122,7 @@ class Table {
 
       this.cleaningTableBody();
       this.renderTableBody ("byPrice");
-      this.up();
+     
 
       console.log(this.elements);
     }
@@ -134,7 +143,7 @@ class Table {
               <thead>
                 <tr class="table-primary">
                   <th><div class="d-flex justify-content-around" data-action="sortName" ><div>Name</div><div id="NameSort" data-action="sortName">  </div></div></th>
-                  <th><div class="d-flex justify-content-around"><div>Price</div><div id="PriceSort" data-action="sortPrice"></div></div></th>
+                  <th><div class="d-flex justify-content-around" data-action="sortPrice" ><div>Price</div><div id="PriceSort" data-action="sortPrice"></div></div></th>
                   <th>Action</th>
                 </tr>  
                 </thead>    

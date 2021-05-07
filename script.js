@@ -25,12 +25,15 @@ class Table {
     let SorteredElements;
 
     if(SortBody === 'byName'){
+
       SorteredElements = this.elements.sort((a, b) => a.title.localeCompare(b.title));
 
-      // this.sortingOrder.orderByName === 'desc' ? SorteredElements.reverse();
+      this.sortingOrder.orderByName === 'desc' ? SorteredElements : SorteredElements.reverse();
 
     } else if (SortBody === 'byPrice') {
       SorteredElements = this.elements.sort((a, b) => a.price - b.price);
+
+      this.sortingOrder.orderByPrice === 'asc' ? SorteredElements : SorteredElements.reverse();
     } else {
       SorteredElements = this.elements;
     }

@@ -4,7 +4,7 @@ class Table {
     this.idElemToRenderWithin = idElemToRenderWithin;
     this.sortingOrder = {
       orderByName: 'asc',
-      orderByPrice: 'desc',
+      orderByPrice: 'desc'
     }
   }
 
@@ -26,6 +26,9 @@ class Table {
 
     if(SortBody === 'byName'){
       SorteredElements = this.elements.sort((a, b) => a.title.localeCompare(b.title));
+
+      // this.sortingOrder.orderByName === 'desc' ? SorteredElements.reverse();
+
     } else if (SortBody === 'byPrice') {
       SorteredElements = this.elements.sort((a, b) => a.price - b.price);
     } else {
@@ -51,7 +54,7 @@ class Table {
   showArrow(direction, id) {
     let NameSort = document.getElementById(id);
     let p = document.createElement('a');
-    p.innerHTML = direction === 'asc' ? '&#11165;': '&#11167;';
+    p.innerHTML = direction === 'asc' ? '&#11167;': '&#11165;';
     NameSort.prepend(p);
   }
 
@@ -71,11 +74,10 @@ class Table {
 
     } else if (sortedBy === 'sortPrice') {
       this.deleteArrow("NameSort");
-      this.showArrow(this.sortingOrder.orderByPrice, "PriceSort");
+      this.showArrow(this.sortingOrder.orderByPrice, "PriceSort");  //если orderByPrice то не меняет стрелку к цене т.к. в showArrow указано условие для asc
     }
   }
 
-  // &#11167;
 
   tableHandler = function(event) {
     const dataAttribute = event.target.dataset;
@@ -115,16 +117,14 @@ class Table {
   
       this.cleaningTableBody();
       this.renderTableBody ("byName");
-      this.showArrow(this.sortingOrder.orderByName, "NameSort");
       this.changeArrowSortingDirection(dataAttribute.action, this.sortingOrder);
 
     } else if (dataAttribute.action === "sortPrice"){
       
-      this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
+      this.sortingOrder.orderByPrice = this.sortingOrder.orderByPrice === 'desc' ? 'asc' : 'desc';
       
       this.cleaningTableBody();
       this.renderTableBody ("byPrice");
-      this.showArrow(this.sortingOrder.orderByName, "PriceSort");
       this.changeArrowSortingDirection(dataAttribute.action, this.sortingOrder);
       
      
@@ -147,7 +147,7 @@ class Table {
               <table class="table table-bordered table-secondary align-middle">
               <thead>
                 <tr class="table-primary">
-                  <th><div class="d-flex justify-content-around" data-action="sortName" ><div>Name</div><div id="NameSort" data-action="sortName">  </div></div></th>
+                  <th><div class="d-flex justify-content-around" data-action="sortName" ><div>Name</div><div id="NameSort" >  </div></div></th>
                   <th><div class="d-flex justify-content-around" data-action="sortPrice" ><div>Price</div><div id="PriceSort" data-action="sortPrice"></div></div></th>
                   <th>Action</th>
                 </tr>  

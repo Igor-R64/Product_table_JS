@@ -57,16 +57,19 @@ class Table {
 
   deleteArrow(name) {
     let Sort = document.getElementById(name);
-    Sort.replaceChild(a);
+    while (Sort.firstChild) {
+      Sort.removeChild(Sort.firstChild);
+    }
+    // Sort.removeChild("a");
   }
 
 
   changeArrowSortingDirection (sortedBy,sortingOrder) {
-    if (sortedBy === 'NameSort') {
+    if (sortedBy === 'sortName') {
       this.deleteArrow("PriceSort");
       this.showArrow(this.sortingOrder.orderByName, "NameSort");
 
-    } else if (sortedBy === 'PriceSort') {
+    } else if (sortedBy === 'sortPrice') {
       this.deleteArrow("NameSort");
       this.showArrow(this.sortingOrder.orderByPrice, "PriceSort");
     }
@@ -113,15 +116,17 @@ class Table {
       this.cleaningTableBody();
       this.renderTableBody ("byName");
       this.showArrow(this.sortingOrder.orderByName, "NameSort");
-      // this.changeArrowSortingDirection(this.dataAttribute.action, this.sortingOrder);
+      this.changeArrowSortingDirection(dataAttribute.action, this.sortingOrder);
 
     } else if (dataAttribute.action === "sortPrice"){
       
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
       
-
       this.cleaningTableBody();
       this.renderTableBody ("byPrice");
+      this.showArrow(this.sortingOrder.orderByName, "PriceSort");
+      this.changeArrowSortingDirection(dataAttribute.action, this.sortingOrder);
+      
      
 
       console.log(this.elements);

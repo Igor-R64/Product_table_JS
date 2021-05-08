@@ -25,8 +25,3 @@ const makeRow = ({
   `;
 
 
-
-  // sort 
-  // const sorteredElementsPrice = this.elements.sort((a, b) => a.price - b.price);
-  // const sorteredElementsTitle = this.elements.sort((a, b) => a.title.localeCompare(b.title));
-

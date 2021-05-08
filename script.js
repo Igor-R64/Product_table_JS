@@ -66,18 +66,19 @@ class Table {
     while (Sort.firstChild) {
       Sort.removeChild(Sort.firstChild);
     }
-    // Sort.removeChild("a");
   }
 
 
   changeArrowSortingDirection (sortedBy,sortingOrder) {
     if (sortedBy === 'sortName') {
       this.deleteArrow("PriceSort");
+      this.deleteArrow("NameSort");
       this.showArrow(this.sortingOrder.orderByName, "NameSort");
 
     } else if (sortedBy === 'sortPrice') {
       this.deleteArrow("NameSort");
-      this.showArrow(this.sortingOrder.orderByPrice, "PriceSort");  //если orderByPrice то не меняет стрелку к цене т.к. в showArrow указано условие для asc
+      this.deleteArrow("PriceSort");
+      this.showArrow(this.sortingOrder.orderByPrice, "PriceSort");
     }
   }
 
@@ -150,8 +151,8 @@ class Table {
               <table class="table table-bordered table-secondary align-middle">
               <thead>
                 <tr class="table-primary">
-                  <th><div class="d-flex justify-content-around" data-action="sortName" ><div>Name</div><div id="NameSort" >  </div></div></th>
-                  <th><div class="d-flex justify-content-around" data-action="sortPrice" ><div>Price</div><div id="PriceSort" data-action="sortPrice"></div></div></th>
+                  <th><div class="d-flex justify-content-around" data-action="sortName" ><div data-action="sortName">Name</div><div id="NameSort" >  </div></div></th>
+                  <th><div class="d-flex justify-content-around" data-action="sortPrice" ><div data-action="sortPrice">Price</div><div id="PriceSort" data-action="sortPrice"></div></div></th>
                   <th>Action</th>
                 </tr>  
                 </thead>    

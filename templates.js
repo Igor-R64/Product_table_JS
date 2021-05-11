@@ -4,7 +4,7 @@ const searchbutton = () => `<button data-action="search" class="btn btn-info" st
 const addbutton = () => `<button data-action="add" class="btn btn-primary" style="width: 100px;"> Add New </button>`;
 
 const searchline = () => `<div class="d-flex justify-content-evenly p-4">
-<input type="text" class="form-control" placeholder="Search..." aria-label="City" style="width: 70%;">
+<input id="searchinput" type="text" class="form-control" placeholder="Search..." aria-label="City" style="width: 70%;">
 ${searchbutton()} ${addbutton()}
 </div>`;
 

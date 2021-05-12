@@ -19,56 +19,13 @@ class Table {
     x.addEventListener("click", this.tableHandler.bind(this));
   }
 
-  renderTableBody (SortBody, elements) {
+  renderTableBody (elements) {
 
     let elem = elements || this.elements;
 
     let x = document.getElementById('tbody');
 
-    let SorteredElements;
-    let SomeUsers;
-    let Search = document.getElementById("searchinput");
-
-    if (elements === 'Search') {
-
-      SomeUsers = this.elements.filter(el => el.title.includes(Search.value));
-
-    } else if(SortBody === 'byName'){
-
-      SorteredElements = elem.sort((a, b) => a.title.localeCompare(b.title));
-
-      this.sortingOrder.orderByName === 'desc' ? SorteredElements : SorteredElements.reverse();
-
-    } else if (SortBody === 'byPrice') {
-      SorteredElements = elem.sort((a, b) => a.price - b.price);
-
-      this.sortingOrder.orderByPrice === 'asc' ? SorteredElements : SorteredElements.reverse();
-
-    } else {
-
-      SorteredElements = elem;
-    }
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SorteredElements));
-    // x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SomeUsers));  //заменил SorteredElements.
-  }
-
-  renderTableBodySearch (elements) {
-
-    let elem = elements || this.elements;
-
-    let x = document.getElementById('tbody');
-    let SomeUsers;
-    let Search = document.getElementById("searchinput");
-
-    if (elements === 'Search') {
-
-      SomeUsers = this.elements.filter(el => el.title.includes(Search.value));
-
-    } else {
-
-      SomeUsers = elem;
-    }
-     x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SomeUsers));
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(elem));
   }
 
 
@@ -113,12 +70,6 @@ class Table {
     }
   }
 
-  // nameSearch() {
-  //   let Search = document.getElementById("searchinput");
-  //   let someUsers = this.elements.filter(el => el.title.includes(Search.value));
-  //   console.log(someUsers);
-  // }
-
 
   tableHandler = function(event) {
     const dataAttribute = event.target.dataset;
@@ -154,28 +105,43 @@ class Table {
       
     } else if (dataAttribute.action === "search") {
 
-    this.cleaningTableBody();
-    this.renderTableBodySearch("Search");
+      this.cleaningTableBody();
+      
+      let Search = document.getElementById("searchinput");
+  
+      let SomeUsers = this.elements.filter(el => el.title.toLowerCase().includes(Search.value.toLowerCase()));
+  
+      this.renderTableBody (SomeUsers);
       
     } else if (dataAttribute.action === "sortName"){
-      
+
       this.sortingOrder.orderByName = this.sortingOrder.orderByName === 'asc' ? 'desc' : 'asc';
-  
+
       this.cleaningTableBody();
-      this.renderTableBody ("byName");
+
+      let SorteredElements = this.elements.sort((a, b) => a.title.localeCompare(b.title));
+
+      this.sortingOrder.orderByName === 'desc' ? SorteredElements : SorteredElements.reverse();
+
+      this.renderTableBody (SorteredElements);
+      
       this.changeArrowSortingDirection(dataAttribute.action, this.sortingOrder);
+
 
     } else if (dataAttribute.action === "sortPrice"){
       
       this.sortingOrder.orderByPrice = this.sortingOrder.orderByPrice === 'desc' ? 'asc' : 'desc';
       
       this.cleaningTableBody();
-      this.renderTableBody ("byPrice");
+
+      let SorteredElements = this.elements.sort((a, b) => a.price - b.price);
+
+      this.sortingOrder.orderByPrice === 'asc' ? SorteredElements : SorteredElements.reverse();
+
+      this.renderTableBody (SorteredElements);
+
       this.changeArrowSortingDirection(dataAttribute.action, this.sortingOrder);
       
-     
-
-      console.log(this.elements);
     }
   
     console.log(dataAttribute);

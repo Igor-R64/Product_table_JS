@@ -48,10 +48,29 @@ class Table {
 
       SorteredElements = elem;
     }
-    
-    
-   x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SomeUsers));  //заменил SorteredElements.
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SorteredElements));
+    // x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SomeUsers));  //заменил SorteredElements.
   }
+
+  renderTableBodySearch (elements) {
+
+    let elem = elements || this.elements;
+
+    let x = document.getElementById('tbody');
+    let SomeUsers;
+    let Search = document.getElementById("searchinput");
+
+    if (elements === 'Search') {
+
+      SomeUsers = this.elements.filter(el => el.title.includes(Search.value));
+
+    } else {
+
+      SomeUsers = elem;
+    }
+     x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(SomeUsers));
+  }
+
 
   cleaning() {
     let div = document.getElementById("table");
@@ -136,8 +155,7 @@ class Table {
     } else if (dataAttribute.action === "search") {
 
     this.cleaningTableBody();
-    this.renderTableBody ("byName","Search");
-    this.changeArrowSortingDirection(dataAttribute.action, this.sortingOrder);
+    this.renderTableBodySearch("Search");
       
     } else if (dataAttribute.action === "sortName"){
       

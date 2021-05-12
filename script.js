@@ -22,10 +22,14 @@ class Table {
   renderTableBody (elements) {
 
     let elem = elements || this.elements;
-
     let x = document.getElementById('tbody');
-
     x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(elem));
+  }
+
+  renderModal() {
+    let x = document.getElementById(this.idElemToRenderWithin);
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
+    // x.addEventListener("click", this.tableHandler.bind(this));
   }
 
 
@@ -75,6 +79,9 @@ class Table {
     const dataAttribute = event.target.dataset;
   
     if (dataAttribute.action === "edit" && !!dataAttribute.id) {
+      this.cleaning();
+      this.renderModal();
+
       console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
     } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
       console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
@@ -146,6 +153,28 @@ class Table {
   
     console.log(dataAttribute);
 
+  }
+
+
+  
+
+  makeHtmlForModal() {
+
+    return `<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+    </div>
+</div>`;
   }
 
   makeHtmlForTable() {

@@ -1,4 +1,67 @@
+class DeleteModal {
+  constructor(idElemToRenderWithin, callback) {
+    this.idElemToRenderWithin = idElemToRenderWithin;
+    this.idElemToDelete = null;
+    this.callback = callback;
+  }
+
+  renderModal() {
+    let x = document.getElementById(this.idElemToRenderWithin);
+    x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
+  }
+
+  open(id) {
+    modal.classList.add('d-flex');
+  }
+
+  close() {
+    modal.classList.remove('d-flex');
+  }
+
+  modalHandler(e) {
+    const atribute = e.target.dataset;
+
+    if(atribute.action === 'No') {
+      this.close();
+    }
+    else if (atribute.action === 'Yes') {
+      this.callback(this.idElemToDelete);
+    }
+  }
+
+  makeHtmlForModal() {
+
+    return `<div id='modal' class="modal" >
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Are you sure?</h5>
+            <button data-action="No" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to perform this action?</p>
+        </div>
+        <div class="modal-footer">
+            <button data-action="Yes" type="button" class="btn btn-outline-danger" style="width: 150px;">Yes</button>
+            <button data-action="No" type="button" class="btn btn-outline-secondary" style="width: 150px;">No</button>
+        </div>
+    </div>
+</div>
+</div>
+`;
+  }
+
+}
+
+
+const deleteModal = new DeleteModal('rendermod',()=> console.log(this.idElemToDelete));
+
+
+
+
+
 class Table {
+
   constructor(elements, idElemToRenderWithin) {
     this.elements = elements;
     this.idElemToRenderWithin = idElemToRenderWithin;
@@ -25,13 +88,6 @@ class Table {
     let x = document.getElementById('tbody');
     x.insertAdjacentHTML("afterbegin", this.makeHtmlForTableBody(elem));
   }
-
-  renderModal() {
-    let x = document.getElementById(this.idElemToRenderWithin);
-    x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
-    // x.addEventListener("click", this.tableHandler.bind(this));
-  }
-
 
   cleaning() {
     let div = document.getElementById("table");
@@ -60,7 +116,6 @@ class Table {
     }
   }
 
-
   changeArrowSortingDirection (sortedBy,sortingOrder) {
     if (sortedBy === 'sortName') {
       this.deleteArrow("PriceSort");
@@ -74,21 +129,25 @@ class Table {
     }
   }
 
+  delete(id) {
+    this.elements = [ ... this.elements.filter(el => el.id != id)];
+    this.cleaningTableBody();
+    this.renderTableBody ();
+  }
 
   tableHandler = function(event) {
     const dataAttribute = event.target.dataset;
   
     if (dataAttribute.action === "edit" && !!dataAttribute.id) {
-      this.cleaning();
-      this.renderModal();
+  
 
       console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
     } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
-      console.log(`Нажата кнопка delete с id ${dataAttribute.id}`);
-      this.elements = [ ... this.elements.filter(el => el.id !=dataAttribute.id)];
+
+      deleteModal.open(dataAttribute.id);
       
-      this.cleaningTableBody();
-      this.renderTableBody ();
+      // this.delete(dataAttribute.id);
+     
 
     } else if (dataAttribute.action === "add") {
 
@@ -158,24 +217,7 @@ class Table {
 
   
 
-  makeHtmlForModal() {
-
-    return `<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-    </div>
-</div>`;
-  }
+  
 
   makeHtmlForTable() {
 
@@ -198,6 +240,7 @@ class Table {
               </table>
           </div>
         </div>
+        <div id='rendermod'></div>
     </div>
  `;
   } 
@@ -216,4 +259,6 @@ class Table {
 const table = new Table(elements, "table");
 
 table.initialize();
+
+deleteModal.renderModal();
 

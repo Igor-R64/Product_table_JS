@@ -8,9 +8,11 @@ class DeleteModal {
   renderModal() {
     let x = document.getElementById(this.idElemToRenderWithin);
     x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
+    x.addEventListener("click", this.modalHandler.bind(this));
   }
 
   open(id) {
+    this.idElemToDelete = id;
     modal.classList.add('d-flex');
   }
 
@@ -26,6 +28,7 @@ class DeleteModal {
     }
     else if (atribute.action === 'Yes') {
       this.callback(this.idElemToDelete);
+      this.close();
     }
   }
 
@@ -54,7 +57,7 @@ class DeleteModal {
 }
 
 
-const deleteModal = new DeleteModal('rendermod',()=> console.log(this.idElemToDelete));
+
 
 
 
@@ -257,6 +260,8 @@ class Table {
 }
 
 const table = new Table(elements, "table");
+
+const deleteModal = new DeleteModal('rendermod',table.delete.bind(table));
 
 table.initialize();
 

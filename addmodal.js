@@ -29,13 +29,13 @@ class AddModal {
         let form = document.forms.addform; 
         let name = form.elements.name;
         let price = form.elements.price;
-        let count = form.elements.count; 
+        let count = form.elements[2]; 
   
         this.callback({
             id: length +1,
-            name:name,
-            price:price,
-            count:count,
+            name: name.value,
+            price: price,
+            count: count,
         });
         this.close();
       }
@@ -64,15 +64,15 @@ class AddModal {
                             <label for="name" class="form-label">Name</label>
                         </div>
                         <div class="col-auto">
-                            <input type="name" class="form-control"> </div>
+                            <input type="name" name="name" class="form-control"> </div>
                       </div>
                       <div class="mb-3 w-75">
                         <label for="price" class="form-label">Price</label>
-                        <input type="price" class="form-control">
+                        <input type="price" name="price" class="form-control">
                       </div>
                       <div class="mb-3 w-75">
                         <label for="count" class="form-label">Count</label>
-                        <input type="count" class="form-control">
+                        <input type="count" name="count" class="form-control">
                       </div>
                 
             </div>

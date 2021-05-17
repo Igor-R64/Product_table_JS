@@ -76,7 +76,9 @@ class Table {
   }
 
   add(element) {
-    this.elements = [... this.elements, element];
+    const length = this.elements.length;
+    this.elements = [... this.elements, element, {id:length +1}];
+    console.log(this.elements);
     this.cleaningTableBody();
     this.renderTableBody ();
   }
@@ -98,7 +100,6 @@ class Table {
     } else if (dataAttribute.action === "add") {
 
       addModal.open();
-
     //   const a = +prompt('Количество','');
     //   const b = prompt('Название','');
     //   const c = +prompt('Цена','');

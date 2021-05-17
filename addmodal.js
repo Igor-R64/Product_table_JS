@@ -27,13 +27,12 @@ class AddModal {
       }
       else if (atribute.action === 'Yes') {
         let form = document.forms.addform; 
-        let name = form.elements.name;
-        let price = form.elements.price;
-        let count = form.elements[2]; 
+        let title = form.elements.title.value;
+        let price = form.elements.price.value;
+        let count = form.elements.count.value; 
   
         this.callback({
-            id: length +1,
-            name: name.value,
+            title: title,
             price: price,
             count: count,
         });
@@ -61,10 +60,10 @@ class AddModal {
                 <form class="row g-3 " name="addform">
                     <div class="mb-3 w-75 ">
                         <div class="col-auto"> 
-                            <label for="name" class="form-label">Name</label>
+                            <label for="title" class="form-label">Name</label>
                         </div>
                         <div class="col-auto">
-                            <input type="name" name="name" class="form-control"> </div>
+                            <input type="title" name="title" class="form-control"> </div>
                       </div>
                       <div class="mb-3 w-75">
                         <label for="price" class="form-label">Price</label>

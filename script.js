@@ -76,6 +76,7 @@ class Table {
     this.renderTableBody ();
   }
 
+
   add(element) {
     const length = this.elements.length;
     this.elements = [... this.elements, {...element,id:length +1 }];
@@ -88,6 +89,8 @@ class Table {
     const dataAttribute = event.target.dataset;
   
     if (dataAttribute.action === "edit" && !!dataAttribute.id) {
+      
+      // editModal.open(dataAttribute.id);
   
 
       console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
@@ -190,10 +193,14 @@ const deleteModal = new DeleteModal('rendermod',table.delete.bind(table));
 
 const addModal = new AddModal('rendermod',table.add.bind(table));
 
+// const editModal = new EditModal('rendermod',table.add.bind(table));
+
 
 table.initialize();
 
 deleteModal.renderModal();
 
 addModal.renderModal();
+
+// editModal.renderModal();
 

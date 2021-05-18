@@ -18,25 +18,66 @@ class AddModal {
     close() {
       modaladd.classList.remove('d-flex');
     }
+
+    clearError() {
+      errortitle.classList.remove('d-block');
+      errorprice.classList.remove('d-block');
+      errorcount.classList.remove('d-block');
+    }
+
+    clearInput() {
+      let form = document.querySelectorAll('.form-control');
+      form.forEach(item => {
+      item.value = "";
+      });
+    }
+
+      
+    
   
     modalHandler(e) {
       const atribute = e.target.dataset;
   
       if(atribute.action === 'No') {
         this.close();
+        this.clearError();
+        this.clearInput();
       }
       else if (atribute.action === 'Yes') {
+
+        this.clearError();
+      
+
         let form = document.forms.addform; 
         let title = form.elements.title.value;
         let price = form.elements.price.value;
         let count = form.elements.count.value; 
-  
-        this.callback({
+
+
+        const titleRegexp = /[А-Яа-яА-яA-ZA-za-z]/;
+        const numbereRegexp = /[0-9]/;
+
+        const isTitleValid = titleRegexp.test(title);
+        const isPriceeValid = numbereRegexp.test(price);
+        const isCounteValid = numbereRegexp.test(count);
+
+
+
+        if (isTitleValid && isPriceeValid && isCounteValid) {
+          this.close();
+          this.clearError();
+          this.clearInput();
+          this.callback({
             title: title,
             price: price,
             count: count,
         });
-        this.close();
+        } else {
+          !isTitleValid ? (errortitle.classList.add('d-block')) : null;
+          !isPriceeValid ? (errorprice.classList.add('d-block')) : null;
+          !isCounteValid ? (errorcount.classList.add('d-block')) : null;
+        }
+
       }
     }
   
@@ -63,18 +104,18 @@ class AddModal {
                             <label for="title" class="form-label">Name</label>
                         </div>
                         <div class="col-auto">
-                            <input type="title" name="title" class="form-control"> </div>
-                      </div>
-                      <div class="mb-3 w-75">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="price" name="price" class="form-control">
-                      </div>
-                      <div class="mb-3 w-75">
-                        <label for="count" class="form-label">Count</label>
-                        <input type="count" name="count" class="form-control">
-                      </div>
-                
-            </div>
+                            <input type="title" name="title" class="form-control"  maxlength="30" placeholder="Name" required> </div>
+                            <div id='errortitle'class="invalid-feedback">Enter title in Abc format.</div>
+                        </div>
+                        <div class="mb-3 w-75">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="price" name="price" class="form-control"  maxlength="7" placeholder="0-9999999" required></div>
+                            <div id='errorprice' class="invalid-feedback">Enter the price in the format 0-9999999.</div>
+                        <div class="mb-3 w-75">
+                            <label for="count" class="form-label">Count</label>
+                            <input type="count" name="count" class="form-control" maxlength="4" placeholder="0-9999" required></div>
+                             <div id='errorcount' class="invalid-feedback">Enter the count in the format 0-9999.</div>
+                        </div>
             <div class="modal-footer">
                 <button data-action="Yes" type="submit" class="btn btn-outline-secondary" style="width: 150px;">Add</button>
             </div>

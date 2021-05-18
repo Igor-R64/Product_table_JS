@@ -10,7 +10,6 @@ class DeleteModal {
       x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
       x.addEventListener("click", this.modalHandler.bind(this));
       x.addEventListener("click", this.modalCloseHandler.bind(this));
-      // x.addEventListener("keypress", this.modalCloseEscHandler.bind(this));
     }
   
     open(id) {
@@ -40,13 +39,6 @@ class DeleteModal {
         this.close();
       }
     }
-  
-    // modalCloseEscHandler(e) {
-    //   const atribute = e.keyCode; 
-    //   if(atribute === 27) {
-    //     this.close();
-    //   }
-    // }
   
     makeHtmlForModal() {
   

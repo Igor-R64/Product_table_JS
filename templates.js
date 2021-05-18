@@ -15,7 +15,7 @@ const makeRow = ({
     title,
     price
   }) => `
-  <tr>
+  <tr class="element">
       <td><div class="d-flex justify-content-between" style="heigt: 100%;">${title}
       <span class="badge rounded-pill bg-secondary">${count}</span>
       </div></td>

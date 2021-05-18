@@ -36,11 +36,12 @@ class Table {
   }
 
   cleaningTableBody() {
-    let tbody = document.getElementById("tbody");
-    while (tbody.firstChild) {
-    tbody.removeChild(tbody.firstChild);
-}
+    let tbody = document.querySelectorAll(".element");
+    tbody.forEach(item => {
+      item.remove();
+    });
   }
+  
 
   showArrow(direction, id) {
     let NameSort = document.getElementById(id);
@@ -77,7 +78,7 @@ class Table {
 
   add(element) {
     const length = this.elements.length;
-    this.elements = [... this.elements, element, {id:length +1}];
+    this.elements = [... this.elements, {...element,id:length +1 }];
     console.log(this.elements);
     this.cleaningTableBody();
     this.renderTableBody ();
@@ -93,31 +94,12 @@ class Table {
     } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
 
       deleteModal.open(dataAttribute.id);
-      
-      // this.delete(dataAttribute.id);
      
 
     } else if (dataAttribute.action === "add") {
 
       addModal.open();
-    //   const a = +prompt('Количество','');
-    //   const b = prompt('Название','');
-    //   const c = +prompt('Цена','');
-    //   const length = this.elements.length;
-
-    // this.elements = [
-    //   ...this.elements,
-    //   {
-    //     id: length +1,
-    //     count: a,
-    //     title: b,
-    //     price: c,
-    //   },
-    // ];
-
-    // this.cleaningTableBody();
-    // this.renderTableBody ();
-      
+        
     } else if (dataAttribute.action === "search") {
 
       this.cleaningTableBody();
@@ -163,10 +145,7 @@ class Table {
 
   }
 
-
-  
-
-  
+ 
 
   makeHtmlForTable() {
 

@@ -77,10 +77,20 @@ class Table {
   }
 
 
-  add(element) {
-    const length = this.elements.length;
-    this.elements = [... this.elements, {...element,id:length +1 }];
-    console.log(this.elements);
+  addEdit(element) {
+    if (element.id) {
+      this.elements = [ ... this.elements.filter(el => el.id != element.id),element];
+      // const elementToDelete = this.elements.find(el => el.id === element.id);
+      // delete elementToDelete;
+      // console.log(this.elements);
+       // удалить старый
+    // добавить новый, с тем же id
+      
+    } else {
+      const length = this.elements.length;
+      this.elements = [... this.elements, {...element,id:length +1 }];
+    }
+    
     this.cleaningTableBody();
     this.renderTableBody ();
   }
@@ -89,11 +99,11 @@ class Table {
     const dataAttribute = event.target.dataset;
   
     if (dataAttribute.action === "edit" && !!dataAttribute.id) {
-      
-      // editModal.open(dataAttribute.id);
-  
 
-      console.log(`Нажата кнопка edit с id ${dataAttribute.id}`);
+      const elementToEdit = this.elements.find(el => el.id === +dataAttribute.id);
+      
+      addEditModal.open(elementToEdit);
+  
     } else if (dataAttribute.action === "delete" && !!dataAttribute.id){
 
       deleteModal.open(dataAttribute.id);
@@ -101,7 +111,7 @@ class Table {
 
     } else if (dataAttribute.action === "add") {
 
-      addModal.open();
+      addEditModal.open();
         
     } else if (dataAttribute.action === "search") {
 
@@ -144,7 +154,6 @@ class Table {
       
     }
   
-    console.log(dataAttribute);
 
   }
 
@@ -191,7 +200,7 @@ const table = new Table(elements, "table");
 
 const deleteModal = new DeleteModal('rendermod',table.delete.bind(table));
 
-const addModal = new AddModal('rendermod',table.add.bind(table));
+const addEditModal = new AddEditModal('rendermod',table.addEdit.bind(table));
 
 // const editModal = new EditModal('rendermod',table.add.bind(table));
 
@@ -200,7 +209,6 @@ table.initialize();
 
 deleteModal.renderModal();
 
-addModal.renderModal();
+addEditModal.renderModal();
 
-// editModal.renderModal();
 

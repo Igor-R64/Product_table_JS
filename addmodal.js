@@ -18,8 +18,10 @@ class AddEditModal {
     }
   
     open(elements) {
-      this.elementsToEdit = elements;
-      modaladd.classList.add('d-flex');
+      if (elements) {
+        this.elementsToEdit = elements;
+      }
+          modaladd.classList.add('d-flex');
     }
   
     close() {
@@ -75,7 +77,7 @@ class AddEditModal {
           this.clearError();
           this.clearInput();
           this.callback({
-            id: this.elementsToEdit.id,
+            // id: this.elementsToEdit.id,
             title: title,
             price: price,
             count: count,
@@ -97,6 +99,7 @@ class AddEditModal {
     }
   
     makeHtmlForAddModal() {
+
   
       return `<div id='modaladd' class="modal" >
       <div class="modal-dialog">
@@ -112,16 +115,16 @@ class AddEditModal {
                             <label for="title" class="form-label">Name</label>
                         </div>
                         <div class="col-auto">
-                            <input type="title" name="title" class="form-control"  maxlength="30" placeholder="Enter the title" required value = ${this.elementsToEdit.title} required > </div>
+                            <input type="title" name="title" class="form-control"  maxlength="30" placeholder="Enter the title" required value = '${this.elementsToEdit.title}'  > </div>
                             <div id='errortitle'class="invalid-feedback">The name must consist of English letters, no more than 30 characters long</div>
                         </div>
                         <div class="mb-3 w-75">
                             <label for="price" class="form-label">Price</label>
-                            <input type="price" name="price" class="form-control"  maxlength="7" placeholder="Enter price" value = ${this.elementsToEdit.price} required></div>
+                            <input type="price" name="price" class="form-control"  maxlength="7" placeholder="Enter price" required value = '${this.elementsToEdit.price}' ></div>
                             <div id='errorprice' class="invalid-feedback">The price must consist of characters from 0-9, no more than 7 characters</div>
                         <div class="mb-3 w-75">
                             <label for="count" class="form-label">Count</label>
-                            <input type="count" name="count" class="form-control" maxlength="4" placeholder="Enter quantity" value = ${this.elementsToEdit.count} required></div>
+                            <input type="count" name="count" class="form-control" maxlength="4" placeholder="Enter quantity" required value = '${this.elementsToEdit.count}' ></div>
                              <div id='errorcount' class="invalid-feedback">The number must consist of characters from 0-9, no more than 4 characters</div>
                         </div>
             <div class="modal-footer">

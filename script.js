@@ -84,12 +84,12 @@ class Table {
       // delete elementToDelete;
       // console.log(this.elements);
        // удалить старый
-    // добавить новый, с тем же id
-      
+    // добавить новый, с тем же id 
+    console
     } else {
       const length = this.elements.length;
-      this.elements = [... this.elements, {...element,id:length +1 }];
-    }
+      this.elements = [... this.elements, {...element, id: length +1 }];
+    };
     
     this.cleaningTableBody();
     this.renderTableBody ();

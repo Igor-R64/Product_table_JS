@@ -80,11 +80,9 @@ class Table {
   addEdit(element) {
     if (element.id) {
       this.elements = [ ... this.elements.filter(el => el.id != element.id),element];
-      // const elementToDelete = this.elements.find(el => el.id === element.id);
-      // delete elementToDelete;
-      // console.log(this.elements);
-       // удалить старый
-    // добавить новый, с тем же id 
+      // this.elements = [... this.elements.splise(хз),element];
+
+    
     console
     } else {
       const length = this.elements.length;

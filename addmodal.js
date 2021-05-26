@@ -94,7 +94,7 @@ class AddEditModal {
           this.clearError();
           this.clearInput();
           this.callback({
-            // id: this.elementsToEdit.id,
+            id: this.elementsToEdit.id,
             title: title,
             price: price,
             count: count,

@@ -28,12 +28,9 @@ class AddEditModal {
       mbody.remove();
     }
 
-
-
-  
-    open(elements) {
-      if (elements) {
-        this.elementsToEdit = elements;
+    open(element) {
+      if (element) {
+        this.elementsToEdit = element;
       }
        modaladd.classList.add('d-flex');
       this.cleaningModalBody();
@@ -76,8 +73,8 @@ class AddEditModal {
 
         let form = document.forms.addform; 
         let title = form.elements.title.value;
-        let price = form.elements.price.value;
-        let count = form.elements.count.value; 
+        let price = +form.elements.price.value;
+        let count = +form.elements.count.value; 
 
 
         const titleRegexp = /[А-Яа-яА-яA-ZA-za-z]/;
@@ -162,5 +159,4 @@ class AddEditModal {
 
     }
              
-  
   }

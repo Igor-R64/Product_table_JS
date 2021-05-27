@@ -79,13 +79,7 @@ class Table {
       if (element.id) {
         const indexElement = this.elements.findIndex(el => el.id === element.id);
         let removed = this.elements.splice(indexElement,1,element);
-        // this.elements = [ ... this.elements];
-        // console.log(this.elements);
-        // console.log(removed);
-
-        // this.elements = [ ... this.elements.filter(el => el.id != element.id),element];
-      
-      } else {
+        } else {
         const length = this.elements.length;
         this.elements = [... this.elements, {...element, id: length +1 }];
       };

@@ -8,5 +8,3 @@ const addEditModal = new AddEditModal('rendermod',table.addEdit.bind(table));
 table.initialize();
 
 deleteModal.renderModal();
-
-// addEditModal.renderModal();

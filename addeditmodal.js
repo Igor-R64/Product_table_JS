@@ -26,19 +26,25 @@ class AddEditModal {
     open(element) {
       if (element) {
         this.elementsToEdit = element;
+      } else {
+        this.elementsToEdit = {
+          id: null,
+          title: '',
+          count: '',
+          price: '',
+        }
       }
-      //  modaladd.classList.add('d-flex');
-      // this.cleaningModal();
       this.renderModal();
-      
     }
   
     close() {
       this.cleaningModal();
-      // modaladd.classList.remove('d-flex');
     }
 
     clearError() {
+      const errortitle = document.getElementById('errortitle');
+      const errorprice = document.getElementById('errorprice');
+      const errorcount = document.getElementById('errorcount');
       errortitle.classList.remove('d-block');
       errorprice.classList.remove('d-block');
       errorcount.classList.remove('d-block');
@@ -50,23 +56,17 @@ class AddEditModal {
       item.value = "";
       });
     }
-
-      
-    
   
     modalHandler(e) {
       const atribute = e.target.dataset;
   
       if(atribute.action === 'No') {
-        this.clearError();
         this.clearInput();
         this.close();
       }
       else if (atribute.action === 'Yes') {
 
         this.clearError();
-      
-
         let form = document.forms.addform; 
         let title = form.elements.title.value;
         let price = +form.elements.price.value;
@@ -74,7 +74,7 @@ class AddEditModal {
 
 
         const titleRegexp = /[А-Яа-яА-яA-ZA-za-z]/;
-        const numbereRegexp = /[0-9]/;
+        const numbereRegexp = /^(?!0)\d+$/;
 
         const isTitleValid = titleRegexp.test(title);
         const isPriceeValid = numbereRegexp.test(price);
@@ -84,7 +84,6 @@ class AddEditModal {
 
         if (isTitleValid && isPriceeValid && isCounteValid) {
           this.close();
-          this.clearError();
           this.clearInput();
           this.callback({
             id: this.elementsToEdit.id,
@@ -93,6 +92,9 @@ class AddEditModal {
             count: count,
         });
         } else {
+          const errortitle = document.getElementById('errortitle');
+          const errorprice = document.getElementById('errorprice');
+          const errorcount = document.getElementById('errorcount');
           !isTitleValid ? (errortitle.classList.add('d-block')) : null;
           !isPriceeValid ? (errorprice.classList.add('d-block')) : null;
           !isCounteValid ? (errorcount.classList.add('d-block')) : null;
@@ -102,7 +104,8 @@ class AddEditModal {
     }
   
     modalCloseHandler(e) {
-      const atribute = e.target; 
+      const atribute = e.target;
+      const modaladd = document.getElementById('modaladd');
       if(atribute === modaladd) {
         this.close();
       }

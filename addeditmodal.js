@@ -15,16 +15,11 @@ class AddEditModal {
       x.insertAdjacentHTML("afterbegin", this.makeHtmlForAddModal());
       x.addEventListener("click", this.modalHandler.bind(this));
       x.addEventListener("click", this.modalCloseHandler.bind(this));
-      this.renderModalBody();
     }
 
-    renderModalBody() {
-      let x = document.getElementById('body');
-      x.insertAdjacentHTML("afterbegin", this.makeHtmlForAddModalBody());
-    }
 
-    cleaningModalBody() {
-      let mbody = document.getElementById("binput");
+    cleaningModal() {
+      let mbody = document.getElementById("modaladd");
       mbody.remove();
     }
 
@@ -32,14 +27,15 @@ class AddEditModal {
       if (element) {
         this.elementsToEdit = element;
       }
-       modaladd.classList.add('d-flex');
-      this.cleaningModalBody();
-      this.renderModalBody();
+      //  modaladd.classList.add('d-flex');
+      // this.cleaningModal();
+      this.renderModal();
       
     }
   
     close() {
-      modaladd.classList.remove('d-flex');
+      this.cleaningModal();
+      // modaladd.classList.remove('d-flex');
     }
 
     clearError() {
@@ -62,9 +58,9 @@ class AddEditModal {
       const atribute = e.target.dataset;
   
       if(atribute.action === 'No') {
-        this.close();
         this.clearError();
         this.clearInput();
+        this.close();
       }
       else if (atribute.action === 'Yes') {
 
@@ -115,7 +111,7 @@ class AddEditModal {
     makeHtmlForAddModal() {
 
   
-      return `<div id='modaladd' class="modal" >
+      return `<div id='modaladd' class="modal d-flex" >
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -123,40 +119,32 @@ class AddEditModal {
                 <button data-action="No" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id ='body'>
-                
+            <form class="row g-3 " name="addform" id ='binput'>
+            <div class="mb-3 w-75 ">
+                <div class="col-auto"> 
+                    <label for="title" class="form-label">Name</label>
+                </div>
+                <div class="col-auto">
+                    <input type="title" name="title" class="form-control"  maxlength="30" placeholder="Enter the title" required value = '${this.elementsToEdit.title}'  > </div>
+                    <div id='errortitle'class="invalid-feedback">The name must consist of English letters, no more than 30 characters long</div>
+                </div>
+                <div class="mb-3 w-75">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="price" name="price" class="form-control"  maxlength="7" placeholder="Enter price" required value = '${this.elementsToEdit.price}' ></div>
+                    <div id='errorprice' class="invalid-feedback">The price must consist of characters from 0-9, no more than 7 characters</div>
+                <div class="mb-3 w-75">
+                    <label for="count" class="form-label">Count</label>
+                    <input type="count" name="count" class="form-control" maxlength="4" placeholder="Enter quantity" required value = '${this.elementsToEdit.count}' ></div>
+                     <div id='errorcount' class="invalid-feedback">The number must consist of characters from 0-9, no more than 4 characters</div>
+                </div>
+              <div class="modal-footer">
+        <button data-action="Yes" type="submit" class="btn btn-outline-secondary" style="width: 150px;">Add</button>
+      </div>
+      </form>
         </div>
     </div>
   </div>
   </div>
   `;
-    }
-
-
-    makeHtmlForAddModalBody() {
-
-      return  `<form class="row g-3 " name="addform" id ='binput'>
-      <div class="mb-3 w-75 ">
-          <div class="col-auto"> 
-              <label for="title" class="form-label">Name</label>
-          </div>
-          <div class="col-auto">
-              <input type="title" name="title" class="form-control"  maxlength="30" placeholder="Enter the title" required value = '${this.elementsToEdit.title}'  > </div>
-              <div id='errortitle'class="invalid-feedback">The name must consist of English letters, no more than 30 characters long</div>
-          </div>
-          <div class="mb-3 w-75">
-              <label for="price" class="form-label">Price</label>
-              <input type="price" name="price" class="form-control"  maxlength="7" placeholder="Enter price" required value = '${this.elementsToEdit.price}' ></div>
-              <div id='errorprice' class="invalid-feedback">The price must consist of characters from 0-9, no more than 7 characters</div>
-          <div class="mb-3 w-75">
-              <label for="count" class="form-label">Count</label>
-              <input type="count" name="count" class="form-control" maxlength="4" placeholder="Enter quantity" required value = '${this.elementsToEdit.count}' ></div>
-               <div id='errorcount' class="invalid-feedback">The number must consist of characters from 0-9, no more than 4 characters</div>
-          </div>
-        <div class="modal-footer">
-  <button data-action="Yes" type="submit" class="btn btn-outline-secondary" style="width: 150px;">Add</button>
-</div>
-</form>`;
-
-    }
-             
+    }             
   }

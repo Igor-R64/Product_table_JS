@@ -9,4 +9,4 @@ table.initialize();
 
 deleteModal.renderModal();
 
-addEditModal.renderModal();
+// addEditModal.renderModal();

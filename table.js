@@ -167,7 +167,7 @@ class Table {
                 <table class="table table-bordered table-secondary align-middle">
                 <thead>
                   <tr class="table-primary">
-                    <th><div class="d-flex justify-content-around" data-action="sortName" ><div data-action="sortName">Name</div><div id="NameSort" >  </div></div></th>
+                    <th><div class="d-flex justify-content-around" data-action="sortName" ><div data-action="sortName">Name</div><div id="NameSort"  >  </div></div></th>
                     <th><div class="d-flex justify-content-around" data-action="sortPrice" ><div data-action="sortPrice">Price</div><div id="PriceSort" data-action="sortPrice"></div></div></th>
                     <th>Action</th>
                   </tr>  

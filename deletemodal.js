@@ -3,22 +3,6 @@ class DeleteModal extends BaseModal {
       super(...args);
       this.idElemToDelete = null;
     }
-
-    renderModal() {
-      let x = document.getElementById(this.idElemToRenderWithin);
-      x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
-      x.addEventListener("click", this.modalHandler.bind(this));
-      x.addEventListener("click", this.modalCloseHandler.bind(this));
-    }
-      
-    open(id) {
-      this.idElemToDelete = id;
-      modal.classList.add('d-flex');
-    }
-  
-    close() {
-      modal.classList.remove('d-flex');
-    }
   
     modalHandler(e) {
       const atribute = e.target.dataset;
@@ -32,12 +16,6 @@ class DeleteModal extends BaseModal {
       }
     }
   
-    modalCloseHandler(e) {
-      const atribute = e.target; 
-      if(atribute === modal) {
-        this.close();
-      }
-    }
   
     makeHtmlForModal() {
   

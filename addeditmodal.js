@@ -8,13 +8,6 @@ class AddEditModal extends BaseModal {
         price: '',
       };
     }
-  
-    renderModal() {
-      let x = document.getElementById(this.idElemToRenderWithin);
-      x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
-      x.addEventListener("click", this.modalHandler.bind(this));
-      x.addEventListener("click", this.modalCloseHandler.bind(this));
-    }
 
 
     cleaningModal() {
@@ -44,9 +37,15 @@ class AddEditModal extends BaseModal {
       const errortitle = document.getElementById('errortitle');
       const errorprice = document.getElementById('errorprice');
       const errorcount = document.getElementById('errorcount');
-      errortitle.classList.remove('d-block');
-      errorprice.classList.remove('d-block');
-      errorcount.classList.remove('d-block');
+      if(errortitle.classList.contains('d-block')){
+        errortitle.classList.remove('d-block');
+      }
+      if(errorprice.classList.contains('d-block')){
+        errorprice.classList.remove('d-block');
+      }
+      if(errorcount.classList.contains('d-block')){
+        errorcount.classList.remove('d-block');
+      }
     }
 
     clearInput() {
@@ -60,7 +59,7 @@ class AddEditModal extends BaseModal {
       const atribute = e.target.dataset;
   
       if(atribute.action === 'No') {
-        this.clearInput();
+        // this.clearInput();
         this.close();
       }
       else if (atribute.action === 'Yes') {
@@ -102,13 +101,7 @@ class AddEditModal extends BaseModal {
       }
     }
   
-    modalCloseHandler(e) {
-      const atribute = e.target;
-      const modaladd = document.getElementById('modaladd');
-      if(atribute === modaladd) {
-        this.close();
-      }
-    }
+  
   
     makeHtmlForModal() {
   

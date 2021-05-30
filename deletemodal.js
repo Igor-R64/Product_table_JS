@@ -1,9 +1,15 @@
 class DeleteModal extends BaseModal {
-    constructor(idElemToRenderWithin, callback, ...args) {
+    constructor(...args) {
       super(...args);
       this.idElemToDelete = null;
     }
-  
+
+    renderModal() {
+      let x = document.getElementById(this.idElemToRenderWithin);
+      x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
+      x.addEventListener("click", this.modalHandler.bind(this));
+      x.addEventListener("click", this.modalCloseHandler.bind(this));
+    }
       
     open(id) {
       this.idElemToDelete = id;

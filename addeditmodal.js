@@ -1,20 +1,5 @@
-class BaseModal {
-  constructor(idElemToRenderWithin, callback) {
-      this.idElemToRenderWithin = idElemToRenderWithin;
-      this.callback = callback;
-  }
-
-  renderModal() {
-      let x = document.getElementById(this.idElemToRenderWithin);
-      x.insertAdjacentHTML("afterbegin", this.makeHtmlForAddModal());
-      x.addEventListener("click", this.modalHandler.bind(this));
-      x.addEventListener("click", this.modalCloseHandler.bind(this));
-    }
-}
-
-
 class AddEditModal extends BaseModal {
-    constructor(idElemToRenderWithin, callback, ...args) {
+    constructor(...args) {
       super(...args);
       this.elementsToEdit = {
         id: null,
@@ -24,6 +9,14 @@ class AddEditModal extends BaseModal {
       };
     }
   
+    renderModal() {
+      let x = document.getElementById(this.idElemToRenderWithin);
+      x.insertAdjacentHTML("afterbegin", this.makeHtmlForModal());
+      x.addEventListener("click", this.modalHandler.bind(this));
+      x.addEventListener("click", this.modalCloseHandler.bind(this));
+    }
+
+
     cleaningModal() {
       let mbody = document.getElementById("modaladd");
       mbody.remove();
@@ -117,8 +110,7 @@ class AddEditModal extends BaseModal {
       }
     }
   
-    makeHtmlForAddModal() {
-
+    makeHtmlForModal() {
   
       return `<div id='modaladd' class="modal d-flex" >
       <div class="modal-dialog">

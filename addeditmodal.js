@@ -60,10 +60,12 @@ class AddEditModal extends BaseModal {
   
       if(atribute.action === 'No') {
         // this.clearInput();
-        this.close();
+        this.removingEventHandler();
+        this.cleaningModal();
+        
       }
       else if (atribute.action === 'Yes') {
-
+        this.removingEventHandler();
         this.clearError();
         let form = document.forms.addform; 
         let title = form.elements.title.value;
@@ -81,7 +83,7 @@ class AddEditModal extends BaseModal {
 
 
         if (isTitleValid && isPriceeValid && isCounteValid) {
-          this.close();
+          this.cleaningModal();
           this.clearInput();
           this.callback({
             id: this.elementsToEdit.id,

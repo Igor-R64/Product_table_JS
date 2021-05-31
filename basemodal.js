@@ -11,6 +11,13 @@ class BaseModal {
         x.addEventListener("click", this.modalCloseHandler.bind(this));
       }
 
+
+      removingEventHandler() {
+        let x = document.getElementById(this.idElemToRenderWithin);
+        x.removeEventListener("click", this.modalHandler.bind(this));
+        x.removeEventListener("click", this.modalCloseHandler.bind(this));
+      }
+
       open(id) {
         this.idElemToDelete = id;
         modal.classList.add('d-flex');
@@ -24,6 +31,7 @@ class BaseModal {
         const atribute = e.target;
         const modaladd = document.querySelector('.modal');
         if(atribute === modaladd) {
+          this.removingEventHandler();
           this.close();
         }
       }
